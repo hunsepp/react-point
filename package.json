@@ -18,7 +18,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "shards-react": "^1.0.0",
-    "shortid": "^2.2.14"
+    "shortid": "^2.2.14",
+    "axios": "^0.20.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,5 +36,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:5000"
 }
