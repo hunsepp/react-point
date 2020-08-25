@@ -20,12 +20,13 @@ const withTracker = (WrappedComponent, options = {}) => {
 
   // eslint-disable-next-line
   const HOC = class extends Component {
+    //컴포넌트가 처음 만들어질때
     componentDidMount() {
       // eslint-disable-next-line
       const page = this.props.location.pathname + this.props.location.search;
       trackPage(`${BASENAME}${page}`);
     }
-
+    //컴포넌트가 다시 리렌더링할때
     componentDidUpdate(prevProps) {
       const currentPage =
         prevProps.location.pathname + prevProps.location.search;

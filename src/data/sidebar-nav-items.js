@@ -35,6 +35,17 @@ export default function() {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
+    },
+    {
+      title: "KAS",
+      htmlBefore: '<i class="material-icons">KAS</i>',
+      to: "/KAS",
+    },
+    {
+      title: "일단 로그인",
+      htmlBefore: '<i class="material-icons">person</i>',
+      to: "/login",
     }
+
   ];
 }
