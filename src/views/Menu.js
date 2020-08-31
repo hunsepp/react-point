@@ -20,10 +20,11 @@ export default function Menu() {
 
     // 카카오 연동/로그인
     const login = res => {
-        axios.post('/api/login', res).then(({data}) => {
+        axios.post('/api/kakao', res).then(({data}) => {
             if(data.result == 1) {
                 localStorage.setItem('kakaoToken', res.response.access_token);
                 setUser(data.user);
+                getMenuList(data.user.kakaoId);
             }
         })
     }
