@@ -45,7 +45,12 @@ export default function() {
       title: "일단 로그인",
       htmlBefore: '<i class="material-icons">person</i>',
       to: "/login",
-    }
+    },
+    {
+      title: "메뉴관리",
+      htmlBefore: '<i class="material-icons">view_module</i>',
+      to: "/menu",
+    },
 
   ];
 }
