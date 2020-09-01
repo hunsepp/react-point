@@ -1,48 +1,52 @@
-import React, { Component } from 'react';
-import Kakao from 'kakaojs';
+import KakaoLogin from "react-kakao-login";
+import React, { Component, useState } from "react";
+import axios from "axios";
 
-class KakaoLogin extends Component{
+const KLogin = () => {
+  const [id, setId] = useState([]);
+  const [nickname, setNickname] = useState([]);
+  const [thumbnail_image, setThumbnail_image] = useState([]);
 
-  componentDidMount(){
-   //02ced8bfeeec0a4a05a7ba7f1931de94
-    console.log("Trying to approach kakao api access...");
-    
-    if (Kakao.Auth == null) {
-        //토큰 넣고 초기화
-        Kakao.init('89c4c146837a62268d96281c80662bdd');
-      }
-    this.setState({"kakao": Kakao})
-    console.log("Kakao access"+Kakao);
+  //카카오 로그인 성공시
+  responseKakao = res => {
+    setId(res.profile.id);
+    setNickname(res.profile.properties.nickname);
+    setThumbnail_image(res.profile.properties.thumbnail_image);
 
-    Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      success: function(authObj) {
-        Kakao.API.request({
-          url: '/check',
-          success: function(res) {
-            alert(JSON.stringify(res))
-          },
-          fail: function(error) {
-            alert(
-              'login success, but failed to request user information: ' +
-                JSON.stringify(error)
-            )
-          },
-        })
-      },
-      fail: function(err) {
-        alert('failed to login: ' + JSON.stringify(err))
-      },
-    })
-  }
-  render(){
-    return (
-      <div>
-        <a id="kakao-login-btn">
-        </a>
-      </div>
-    );
-  }
-}
+    axios
+      .get("/api/kakao/signUp", {
+        params: {
+          id,
+          nickname,
+          thumbnail_image
+        }
+      })
+      .then(result => {
+        console.log(result.data);
+        if (result.data != null) {
+          //resultIsVisible = true;
+          //barIsVisible = false;
+        }
+      });
+  };
 
-export default KakaoLogin;
+  responseFail = err => {
+    console.error(err);
+  };
+  return (
+    <div>
+      <KakaoLogin
+        //카카오에서 발급받은 API KEY값
+        jsKey="89c4c146837a62268d96281c80662bdd"
+        //로그인 성공시 실행할 함수
+        onSuccess={this.responseKakao}
+        //로그인 실패시 실행할 함수
+        onFailure={this.responseFail}
+        //사용자 프로필 정보 가져오기
+        getProfile={true}
+      />
+    </div>
+  );
+};
+
+export default KLogin;
