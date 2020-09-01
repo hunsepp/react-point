@@ -16,6 +16,7 @@ import BlogPosts from "./views/BlogPosts";
 import KAS from "./views/KAS"
 import Login from "./views/sign/login"
 import Check from "./views/sign/check"
+import Menu from "./views/Menu";
 
 
 export default [
@@ -74,6 +75,11 @@ export default [
     path: "/check",
     layout: DefaultLayout,
     component: Check
+  },
+  {
+    path: "/menu",
+    layout: DefaultLayout,
+    component: Menu
   },
   
 ];
