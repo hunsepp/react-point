@@ -18,6 +18,8 @@ import Login from "./views/sign/login"
 import Check from "./views/sign/check"
 import Menu from "./views/Menu";
 import Store from "./views/Store";
+import Transfer from "./views/Transfer";
+import Coffee from "./views/coffee";
 
 export default [
   {
@@ -86,4 +88,14 @@ export default [
     layout: DefaultLayout,
     component: Store
   },
+  {
+    path: "/Transfer",
+    layout: DefaultLayout,
+    component: Transfer
+  },
+  {
+    path: "/coffee",
+    layout: DefaultLayout,
+    component: Coffee
+  }
 ];

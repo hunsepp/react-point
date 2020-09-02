@@ -57,7 +57,7 @@ export default function Store() {
         const token = localStorage.getItem('storeToken');
         axios.get(`/api/store/${token}`)
         .then(({data}) => {
-            if(data.result == 0) return;
+            if(data.result == 0 || !data.store) return;
             storeInfo(data.store);
         });
     }, [])
