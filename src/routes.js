@@ -12,7 +12,9 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
-import KAS from "./views/KAS"
+import KAS from "./views/KAS";
+import Transfer from "./views/Transfer";
+import Coffee from "./views/coffee";
 
 export default [
   {
@@ -61,5 +63,14 @@ export default [
     layout: DefaultLayout,
     component: KAS
   },
-  
+  {
+    path: "/Transfer",
+    layout: DefaultLayout,
+    component: Transfer
+  },
+  {
+    path: "/coffee",
+    layout: DefaultLayout,
+    component: Coffee
+  }
 ];

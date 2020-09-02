@@ -35,6 +35,16 @@ export default function() {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
+    },
+    {
+      title: "Transfer",
+      htmlBefore: '<i class="material-icons"></i>',
+      to: "/Transfer",
+    },
+    {
+      title: "coffee",
+      htmlBefore: '<i class="material-icons"></i>',
+      to: "/coffee",
     }
   ];
 }
