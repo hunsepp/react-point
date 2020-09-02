@@ -20,6 +20,8 @@ import Menu from "./views/Menu";
 import Store from "./views/Store";
 import Transfer from "./views/Transfer";
 import Coffee from "./views/coffee";
+import myStore from "./views/myStore";
+import myCoupon from "./views/myCoupon";
 
 export default [
   {
@@ -97,5 +99,15 @@ export default [
     path: "/coffee",
     layout: DefaultLayout,
     component: Coffee
+  },
+  {
+    path: "/mystore",
+    layout: DefaultLayout,
+    component: myStore
+  },
+  {
+    path: "/mycoupon",
+    layout: DefaultLayout,
+    component: myCoupon
   }
 ];

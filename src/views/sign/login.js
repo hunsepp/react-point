@@ -1,5 +1,5 @@
 import React from "react";
-import KLogin from "./KakaoLogin";
+import KLogin from "./kakaoLogin";
 import { Card, CardHeader, CardBody, CardFooter } from "shards-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
