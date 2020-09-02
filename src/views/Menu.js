@@ -12,7 +12,7 @@ const useInput = (initialState) => {
 }
 
 export default function Menu() {
-    const [user, setUser] = useState();
+    const [store, setStore] = useState();
     const [menuList, setMenuList] = useState();
 
     const menuName = useInput('');
@@ -20,25 +20,27 @@ export default function Menu() {
 
     // 카카오 연동/로그인
     const login = res => {
-        axios.post('/api/kakao', res).then(({data}) => {
+        axios.post('/api/store', res).then(({data}) => {
             if(data.result == 1) {
-                localStorage.setItem('kakaoToken', res.response.access_token);
-                setUser(data.user);
-                getMenuList(data.user.kakaoId);
+                localStorage.setItem('storeToken', res.response.access_token);
+                setStore(data.store);
+                getMenuList(data.store.kakaoId);
             }
         })
     }
 
     // 메뉴 등록
     const menuAdd = () => {
+        if(store.approve != "승인") return alert('승인 후 시도해주세요.');
+
         axios.post('/api/menu', {
-            kakaoId: user.kakaoId,
+            kakaoId: store.kakaoId,
             name: menuName.value,
             price: menuPrice.value
         }).then(({data}) => {
             if(data.result == 0) return;
             
-            getMenuList(user.kakaoId);
+            getMenuList(store.kakaoId);
             menuName.reset('');
             menuPrice.reset(0);
         });
@@ -46,9 +48,11 @@ export default function Menu() {
 
     // 메뉴 삭제
     const menuDel = id => {
+        if(store.approve != "승인") return alert('승인 후 시도해주세요.');
+
         axios.delete(`/api/menu/${id}`).then(({data}) => {
             if(data.result == 0) return;
-            getMenuList(user.kakaoId);
+            getMenuList(store.kakaoId);
         })
     }
 
@@ -61,15 +65,14 @@ export default function Menu() {
 
     // 액세스 토큰이 있을 경우 계정 정보 받아오기
     useEffect(() => {
-        const token = localStorage.getItem('kakaoToken');
-        axios.get(`/api/kakao/${token}`).then(({data}) => {
+        const token = localStorage.getItem('storeToken');
+        axios.get(`/api/store/${token}`).then(({data}) => {
             if(data.result == 0) return;
-            setUser(data.user);
+            setStore(data.store);            
 
             // 계정 정보가 있을 경우 메뉴 정보 받아오기
-            getMenuList(data.user.kakaoId);
+            getMenuList(data.store.kakaoId);
         });
-
     }, [])
 
     return (
@@ -82,7 +85,7 @@ export default function Menu() {
             />
         </Row>
 
-        {user ?
+        {store?.account ?
             <Row>
                 <Col lg="6" md="12" className="mb-4">
                     <Card small>
@@ -143,6 +146,7 @@ export default function Menu() {
                 buttonText='카카오 로그인'
                 onSuccess={login}
                 getProfile={true}
+                useDefaultStyle
             />
         }
     </Container>

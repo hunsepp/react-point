@@ -17,7 +17,7 @@ import KAS from "./views/KAS"
 import Login from "./views/sign/login"
 import Check from "./views/sign/check"
 import Menu from "./views/Menu";
-
+import Store from "./views/Store";
 
 export default [
   {
@@ -81,5 +81,9 @@ export default [
     layout: DefaultLayout,
     component: Menu
   },
-  
+  {
+    path: "/store",
+    layout: DefaultLayout,
+    component: Store
+  },
 ];

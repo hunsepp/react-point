@@ -47,10 +47,14 @@ export default function() {
       to: "/login",
     },
     {
+      title: "매장관리",
+      htmlBefore: '<i class="material-icons">table_chart</i>',
+      to: "/store",
+    },
+    {
       title: "메뉴관리",
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/menu",
     },
-
   ];
 }
