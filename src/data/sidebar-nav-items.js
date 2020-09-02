@@ -35,6 +35,31 @@ export default function() {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
-    }
+    },
+    {
+      title: "KAS",
+      htmlBefore: '<i class="material-icons">KAS</i>',
+      to: "/KAS",
+    },
+    {
+      title: "일단 로그인",
+      htmlBefore: '<i class="material-icons">person</i>',
+      to: "/login",
+    },
+    {
+      title: "매장관리",
+      htmlBefore: '<i class="material-icons">table_chart</i>',
+      to: "/store",
+    },
+    {
+      title: "메뉴관리",
+      htmlBefore: '<i class="material-icons">view_module</i>',
+      to: "/menu",
+    },
+    {
+      title: "점포관리",
+      htmlBefore: '<i class="material-icons">view_module</i>',
+      to: "/mystore",
+    },
   ];
 }
