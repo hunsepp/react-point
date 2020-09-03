@@ -42,9 +42,9 @@ export default function() {
       to: "/KAS",
     },
     {
-      title: "일단 로그인",
+      title: "매장 로그인",
       htmlBefore: '<i class="material-icons">person</i>',
-      to: "/login",
+      to: "/storelogin",
     },
     {
       title: "매장관리",
@@ -57,19 +57,34 @@ export default function() {
       to: "/menu",
     },
     {
+      title: "유저 로그인",
+      htmlBefore: '<i class="material-icons">person</i>',
+      to: "/login",
+    },
+    {
       title: "Transfer",
       htmlBefore: '<i class="material-icons"></i>',
       to: "/Transfer",
     },
     {
-      title: "주문",
-      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      title: "coffee",
+      htmlBefore: '<i class="material-icons"></i>',
       to: "/coffee",
     },
     {
       title: "점포관리",
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/mystore",
-    }
+    },
+    {
+      title: "주문하기",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/orderstore",
+    },
+    {
+      title: "포인트 내역",
+      htmlBefore: '<i class="material-icons">error</i>',
+      to: "/point",
+    },
   ];
 }

@@ -16,12 +16,17 @@ import BlogPosts from "./views/BlogPosts";
 import KAS from "./views/KAS"
 import Login from "./views/sign/login"
 import Check from "./views/sign/check"
-import Menu from "./views/Menu";
-import Store from "./views/Store";
+import Menu from "./views/store/Menu";
+import Store from "./views/store/Store";
 import Transfer from "./views/Transfer";
 import Coffee from "./views/coffee";
 import myStore from "./views/myStore";
 import myCoupon from "./views/myCoupon";
+import StoreLogin from "./views/store/StoreLogin";
+import OrderStore from "./views/order/OrderStore";
+import OrderMenu from "./views/order/OrderMenu";
+import Order from "./views/order/Order";
+import Point from "./views/Point";
 
 export default [
   {
@@ -109,5 +114,30 @@ export default [
     path: "/mycoupon",
     layout: DefaultLayout,
     component: myCoupon
-  }
+  },
+  {
+    path: "/storelogin",
+    layout: DefaultLayout,
+    component: StoreLogin
+  },
+  {
+    path: "/orderstore",
+    layout: DefaultLayout,
+    component: OrderStore
+  },
+  {
+    path: "/ordermenu",
+    layout: DefaultLayout,
+    component: OrderMenu
+  },
+  {
+    path: "/order",
+    layout: DefaultLayout,
+    component: Order
+  },
+  {
+    path: "/point",
+    layout: DefaultLayout,
+    component: Point
+  },
 ];
