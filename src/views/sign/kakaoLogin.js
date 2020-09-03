@@ -15,10 +15,6 @@ const KLogin = () => {
   //카카오 로그인 성공시
   const responseKakao = (res) => {
     setId(res.profile.id);
-<<<<<<< HEAD
-    console.log(res);
-=======
->>>>>>> shin
     setNickname(res.profile.properties.nickname);
     setThumbnail_image(res.profile.properties.thumbnail_image);
     setAccessToken(res.response.access_token);

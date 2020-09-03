@@ -2,11 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Container, Row, Col, Card, CardBody, Badge} from "shards-react";  
 import PageTitle from '../../components/common/PageTitle';
-<<<<<<< HEAD
-=======
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchLocation } from "@fortawesome/free-solid-svg-icons";
->>>>>>> shin
 
 export default function OrderStore({history}){
   const [stores, setStores] = useState([]);
@@ -39,9 +36,6 @@ export default function OrderStore({history}){
                 >{store.category}</Badge>
               </div>
               <CardBody>
-<<<<<<< HEAD
-                <h5 className="card-title">{store.name}</h5>
-=======
                 <Row>
                 <Col lg="8">
                 <h5 className="card-title">{store.name}</h5>
@@ -50,7 +44,6 @@ export default function OrderStore({history}){
                 <FontAwesomeIcon icon={faSearchLocation} color="black" size="2x" />
                 </Col>
                 </Row>
->>>>>>> shin
                 <p className="card-text d-block mb-3">{store.address}</p>
               </CardBody>
             </Card>

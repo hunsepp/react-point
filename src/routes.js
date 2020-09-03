@@ -27,6 +27,7 @@ import OrderStore from "./views/order/OrderStore";
 import OrderMenu from "./views/order/OrderMenu";
 import Order from "./views/order/Order";
 import OrderList from "./views/order/OrderList";
+import Main from "./views/main/Main"
 
 export default [
   {
@@ -139,5 +140,10 @@ export default [
     path: "/orderlist",
     layout: DefaultLayout,
     component: OrderList
+  },
+  {
+    path: "/main",
+    layout: DefaultLayout,
+    component: Main
   },
 ];
