@@ -33,7 +33,6 @@ export default function Order({location, history}) {
         axios.get(`/api/order/${query.id}`)
         .then(({data}) => {
             if(!data.order) return history.push('/orderstore');
-            console.log(data.order);
             setOrder(data.order);
         })
     }, [])

@@ -26,7 +26,7 @@ import StoreLogin from "./views/store/StoreLogin";
 import OrderStore from "./views/order/OrderStore";
 import OrderMenu from "./views/order/OrderMenu";
 import Order from "./views/order/Order";
-import Point from "./views/Point";
+import OrderList from "./views/order/OrderList";
 
 export default [
   {
@@ -136,8 +136,8 @@ export default [
     component: Order
   },
   {
-    path: "/point",
+    path: "/orderlist",
     layout: DefaultLayout,
-    component: Point
+    component: OrderList
   },
 ];
