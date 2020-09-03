@@ -15,6 +15,7 @@ const KLogin = () => {
   //카카오 로그인 성공시
   const responseKakao = (res) => {
     setId(res.profile.id);
+    console.log(res);
     setNickname(res.profile.properties.nickname);
     setThumbnail_image(res.profile.properties.thumbnail_image);
     setAccessToken(res.response.access_token);
@@ -29,7 +30,7 @@ const KLogin = () => {
         user_refresh_token: refresh_token,
       })
       .then(({ data }) => {
-        if (data.checkSaving == 1) {
+        if (data.result == 1) {
           localStorage.setItem("userAccessToken", access_token);
           setKuser(data.kuser);
           window.location = "/blog-overview";
