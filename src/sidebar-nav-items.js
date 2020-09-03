@@ -57,19 +57,9 @@ export default function() {
       to: "/menu",
     },
     {
-      title: "Transfer",
-      htmlBefore: '<i class="material-icons"></i>',
-      to: "/Transfer",
-    },
-    {
-      title: "주문",
-      htmlBefore: '<i class="material-icons">vertical_split</i>',
-      to: "/coffee",
-    },
-    {
       title: "점포관리",
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: "/mystore",
-    }
+    },
   ];
 }
