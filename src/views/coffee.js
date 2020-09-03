@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Transfer from './Transfer';
-import {Americano,CaffeLatte,Espresso,Cappuccino,CaffeMocha,Macchiato} from '../images/coffee_Img/imgPack';
+import {Americano,CaffeLatte,Espresso} from '../images/coffee_Img/imgPack';
 import {Row, Col, Card, CardBody, Button} from "shards-react";
 
 function TabPanel(props) {
@@ -91,7 +91,7 @@ export default function Coffee() {
         </AppBar>
         <TabPanel value={value} index={0}>
         <Row>
-          <Col lg="6">
+          <Col lg="8">
             <div style={{ height: 200 ,weigt:200  }}>
               <Col  className="mb-4">
                 <Card small>
@@ -153,68 +153,6 @@ export default function Coffee() {
               </Col>
             </div>
           </Col>
-          <Col lg="6">
-            <div style={{ height: 200 ,weigt:200  }}>
-              <Col  className="mb-4">
-                <Card small>
-                  <CardBody>
-                    <Cappuccino/>
-                    <Row>
-                      <Col lg="6" md="12" className="form-group">
-                        <h2>카푸치노</h2>                               
-                      </Col>
-                      <Col lg="6" md="12" className="form-group">
-                        <label htmlFor="menu-price">2500원</label>
-                      </Col>
-                      <Col className="d-flex px-3 border-0">
-                          <Button pill theme="info" size="sm" className="ml-auto" onClick={pButton}>추가</Button>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </div>
-            <div style={{ height: 200 ,weigt:200  }}>
-              <Col  className="mb-4">
-                <Card small>
-                  <CardBody>
-                    <CaffeMocha/>
-                    <Row>
-                      <Col lg="6" md="12" className="form-group">
-                        <h2>카페모카</h2>                            
-                      </Col>
-                      <Col lg="6" md="12" className="form-group">
-                        <label htmlFor="menu-price">3500원</label>
-                      </Col>
-                      <Col className="d-flex px-3 border-0">
-                          <Button pill theme="info" size="sm" className="ml-auto" onClick={pButton}>추가</Button>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </div>
-            <div style={{ height: 200 ,weigt:200  }}>
-              <Col  className="mb-4">
-                <Card small>
-                  <CardBody>
-                    <Macchiato/>
-                    <Row>
-                      <Col lg="6" md="12" className="form-group">
-                        <h2>마끼아또</h2>                            
-                      </Col>
-                      <Col lg="6" md="12" className="form-group">
-                        <label htmlFor="menu-price">3000원</label>
-                      </Col>
-                      <Col className="d-flex px-3 border-0">
-                          <Button pill theme="info" size="sm" className="ml-auto" onClick={pButton}>추가</Button>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </div>
-          </Col>
         </Row>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -235,25 +173,17 @@ export default function Coffee() {
         <TabPanel value={value} index={6}>
           Coffee Seven
         </TabPanel>
-        
       </div>
-        <Row>
-          <Col lg="8">
-            <Card small>
-              <CardBody>
-                <h1>총 주문 가격 {price}</h1>
-                <Button theme="warning"onClick={cButton}>전체취소</Button>    
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4">
-            <Card small>
-              <CardBody>
-                <Transfer value={price}/>    
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+        <Col lg="4">
+          <Card small>
+            <CardBody>
+              <h1>총 주문 가격 {price}</h1>
+              <Button theme="warning"onClick={cButton}>전체취소</Button>
+              <Transfer value={price}/>    
+            </CardBody>
+          </Card>
+        </Col>
     </div>
+    
   );
 }

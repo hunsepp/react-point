@@ -29,7 +29,7 @@ const KLogin = () => {
         user_refresh_token: refresh_token,
       })
       .then(({ data }) => {
-        if (data.checkSaving == 1) {
+        if (data.result == 1) {
           localStorage.setItem("userAccessToken", access_token);
           setKuser(data.kuser);
           window.location = "/blog-overview";
