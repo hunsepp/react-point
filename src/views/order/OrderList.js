@@ -51,72 +51,44 @@ export default function Point({history}) {
 
     return (
         <Container fluid className="main-content-container px-4">
-            <Row noGutters className="page-header py-4" />
+            <Row noGutters className="page-header py-4">
+                <PageTitle
+                    sm="4"
+                    title="주문내역"
+                    className="text-sm-left"
+                />
+            </Row>
 
             <Row>
-                <Col lg="6" md="12" className="mb-4">
+                <Col lg="12" className="mb-4">
                     <Card small className="mb-4">
-                        <CardHeader className="border-bottom">
-                            <h6 className="m-0">주문내역</h6>
-                        </CardHeader>
-
                         <CardBody className="p-0 pb-3">
                             <table className="table mb-0">
                                 <thead>
                                     <tr>
                                         <th scope="col" className="border-0">주문 매장</th>
                                         <th scope="col" className="border-0">주문일</th>
+                                        <th scope="col" className="border-0">구분</th>
+                                        <th scope="col" className="border-0">포인트</th>
                                         <th scope="col" className="border-0">주문 총액</th>
-                                        <th scope="col" className="border-0">상세보기</th>
+                                        <th scope="col" className="border-0">주문 상세</th>
+                                        <th scope="col" className="border-0">Tx</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {orderList?.map((order) => {
                                     return (
                                         <tr key={order._id}>
-                                            <td>{order.store.name}</td>
+                                            <td onClick={() => history.push(`/ordermenu?id=${order.store._id}`)}>{order.store.name}</td>
                                             <td>{formatDate(order.create)}</td>
+                                            <td>{order.point >= 0 ? "적립" : "사용"}</td>
+                                            <td>{order.point}KUN</td>
                                             <td>{order.total}원</td>
                                             <td>
                                                 <Button theme="secondary" onClick={() => orderInfo(order._id)}>확인</Button>
                                             </td>
-                                        </tr>
-                                    )
-                                })}
-                                </tbody>
-                            </table>
-                        </CardBody>
-                    </Card>
-                </Col>
-
-                <Col lg="6" md="12" className="mb-4">
-                    <Card small className="mb-4">
-                        <CardHeader className="border-bottom">
-                            <h6 className="m-0">포인트 내역</h6>
-                        </CardHeader>
-
-                        <CardBody className="p-0 pb-3">
-                            <table className="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className="border-0">구분</th>
-                                        <th scope="col" className="border-0">날짜</th>
-                                        <th scope="col" className="border-0">포인트</th>
-                                        <th scope="col" className="border-0">기능</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {pointList?.map((point) => {
-                                    let type;
-                                    if(point.from == '0x0000000000000000000000000000000000000000') type = "적립";
-                                    else type = "사용"
-                                    return (
-                                        <tr key={point.transactionHash}>
-                                            <td>{type}</td>
-                                            <td>{formatDate(point.timestamp * 1000)}</td>
-                                            <td>{point.value} KUN</td>
                                             <td>
-                                                <a href={`https://baobab.scope.klaytn.com/tx/${point.transactionHash}`} target="_blank">
+                                                <a href={`https://baobab.scope.klaytn.com/tx/${order.txHash}`} target="_blank">
                                                     <Button theme="secondary">확인</Button>
                                                 </a>
                                             </td>

@@ -18,7 +18,7 @@ export default function StoreLogin({history}) {
     })
   }
 
-  // 액세스 토큰이 있을 경우 계정 정보 받아오기
+  // 액세스 토큰이 있을 경우 계정 정보 받아오고 정보가 있을 경우 메인으로
   useEffect(() => {
     const token = localStorage.getItem('storeToken');
     axios.get(`/api/store/${token}`).then(({data}) => {
