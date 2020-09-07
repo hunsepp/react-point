@@ -22,7 +22,7 @@ export default function StoreLogin({history}) {
   useEffect(() => {
     const token = localStorage.getItem('storeToken');
     axios.get(`/api/store/${token}`).then(({data}) => {
-        if(data.result == 1) return history.push('/');
+        if(data.result == 1 && data.store) return history.push('/');
     });
   }, [])
 
