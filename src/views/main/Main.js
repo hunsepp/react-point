@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, CardBody, CardImg } from "shards-react";
 import styled from "styled-components";
 import main1 from "../../images/main1.jpg";
 import main2 from "../../images/main2.jpg";
-
+  
 // export default function Slide({ img }) {
 //   return <CardImg top src={img} />;
 // }

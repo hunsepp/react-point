@@ -14,6 +14,8 @@ const KLogin = () => {
 
   //카카오 로그인 성공시
   const responseKakao = (res) => {
+    console.log(setNickname);
+    console.log(res);
     setId(res.profile.id);
     setNickname(res.profile.properties.nickname);
     setThumbnail_image(res.profile.properties.thumbnail_image);
