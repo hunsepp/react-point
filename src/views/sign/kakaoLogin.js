@@ -5,11 +5,11 @@ import axios from "axios";
 const dotenv = require("dotenv");
 
 const KLogin = () => {
-  const [id, setId] = useState([]);
-  const [nickname, setNickname] = useState([]);
-  const [thumbnail_image, setThumbnail_image] = useState([]);
-  const [access_token, setAccessToken] = useState([]);
-  const [refresh_token, setRefreshToken] = useState([]);
+  const [id, setId] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [thumbnail_image, setThumbnail_image] = useState("");
+  const [access_token, setAccessToken] = useState("");
+  const [refresh_token, setRefreshToken] = useState("");
   const [kuser, setKuser] = useState();
 
   //카카오 로그인 성공시

@@ -13,9 +13,9 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 //여기부터 우리가 추가한 거
-import KAS from "./views/KAS"
-import Login from "./views/sign/login"
-import Check from "./views/sign/check"
+import KAS from "./views/KAS";
+import Login from "./views/sign/login";
+import Check from "./views/sign/check";
 import Menu from "./views/store/Menu";
 import Store from "./views/store/Store";
 import Transfer from "./views/Transfer";
@@ -27,123 +27,124 @@ import OrderStore from "./views/order/OrderStore";
 import OrderMenu from "./views/order/OrderMenu";
 import Order from "./views/order/Order";
 import OrderList from "./views/order/OrderList";
-import Main from "./views/main/Main"
+import Main from "./views/main/Main";
 
 export default [
   {
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/blog-overview" />
+    component: () => <Redirect to="/main" />,
   },
+
   {
     path: "/blog-overview",
     layout: DefaultLayout,
-    component: BlogOverview
+    component: BlogOverview,
   },
   {
     path: "/user-profile-lite",
     layout: DefaultLayout,
-    component: UserProfileLite
+    component: UserProfileLite,
   },
   {
     path: "/add-new-post",
     layout: DefaultLayout,
-    component: AddNewPost
+    component: AddNewPost,
   },
   {
     path: "/errors",
     layout: DefaultLayout,
-    component: Errors
+    component: Errors,
   },
   {
     path: "/components-overview",
     layout: DefaultLayout,
-    component: ComponentsOverview
+    component: ComponentsOverview,
   },
   {
     path: "/tables",
     layout: DefaultLayout,
-    component: Tables
+    component: Tables,
   },
   {
     path: "/blog-posts",
     layout: DefaultLayout,
-    component: BlogPosts
+    component: BlogPosts,
   },
   {
     path: "/KAS",
     layout: DefaultLayout,
-    component: KAS
+    component: KAS,
   },
   {
     path: "/login",
     layout: DefaultLayout,
-    component: Login
+    component: Login,
   },
   {
     path: "/check",
     layout: DefaultLayout,
-    component: Check
+    component: Check,
   },
   {
     path: "/menu",
     layout: DefaultLayout,
-    component: Menu
+    component: Menu,
   },
   {
     path: "/store",
     layout: DefaultLayout,
-    component: Store
+    component: Store,
   },
   {
     path: "/Transfer",
     layout: DefaultLayout,
-    component: Transfer
+    component: Transfer,
   },
   {
     path: "/coffee",
     layout: DefaultLayout,
-    component: Coffee
+    component: Coffee,
   },
   {
     path: "/mystore",
     layout: DefaultLayout,
-    component: myStore
+    component: myStore,
   },
   {
     path: "/mycoupon",
     layout: DefaultLayout,
-    component: myCoupon
+    component: myCoupon,
   },
   {
     path: "/storelogin",
     layout: DefaultLayout,
-    component: StoreLogin
+    component: StoreLogin,
   },
   {
     path: "/orderstore",
     layout: DefaultLayout,
-    component: OrderStore
+    component: OrderStore,
   },
   {
     path: "/ordermenu",
     layout: DefaultLayout,
-    component: OrderMenu
+    component: OrderMenu,
   },
   {
     path: "/order",
     layout: DefaultLayout,
-    component: Order
+    component: Order,
   },
   {
     path: "/orderlist",
     layout: DefaultLayout,
-    component: OrderList
+    component: OrderList,
   },
   {
     path: "/main",
     layout: DefaultLayout,
-    component: Main
+    component: Main,
   },
 ];
