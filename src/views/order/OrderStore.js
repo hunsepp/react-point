@@ -4,9 +4,11 @@ import {Container, Row, Col, Card, CardBody, Badge} from "shards-react";
 import PageTitle from '../../components/common/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchLocation } from "@fortawesome/free-solid-svg-icons";
+import Loader from '../Loader';
 
 export default function OrderStore({history}){
   const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // 메뉴 선택으로 이동
   const moveMenu = id => {
@@ -18,10 +20,11 @@ export default function OrderStore({history}){
     axios.get('/api/store')
     .then(({data}) => {
       setStores(data.stores);
+      setLoading(false);
     })
   }, []);
     
-  return (
+  return loading ? <Loader loading={loading} /> : (
     <Container fluid className="main-content-container px-4">
       <Row noGutters className="page-header py-4">
         <PageTitle sm="4" title="매장 선택" subtitle="주문하기" className="text-sm-left" />

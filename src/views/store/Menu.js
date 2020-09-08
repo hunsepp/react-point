@@ -2,17 +2,13 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button} from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
-
-const useInput = (initialState) => {
-    const [value, setValue] = useState(initialState);
-    const onChange = e => setValue(e.target.value);
-    const reset = initialState => setValue(initialState);
-    return {value, onChange, reset};
-}
+import {useInput} from '../../utils/common';
+import Loader from '../Loader';
 
 export default function Menu({history}) {
     const [store, setStore] = useState();
     const [menuList, setMenuList] = useState();
+    const [loading, setLoading] = useState(true);
 
     const menuName = useInput('');
     const menuPrice = useInput(0);
@@ -46,7 +42,10 @@ export default function Menu({history}) {
     // 메뉴 목록
     const getMenuList = id => {
         axios.get(`/api/menu/${id}`).then(({data}) => {
-            if(data.result == 1) setMenuList(data.menus);
+            if(data.result == 1) {
+                setMenuList(data.menus);
+                setLoading(false);
+            };
         });
     }
 
@@ -62,7 +61,7 @@ export default function Menu({history}) {
         });
     }, [])
 
-    return (
+    return loading ? <Loader loading={loading} /> : (
     <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
             <PageTitle

@@ -1,11 +1,14 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import KaKaoBtn from 'react-kakao-login';
 import axios from 'axios';
 import { Card, CardHeader, CardBody, CardFooter } from "shards-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
+import Loader from '../Loader';
 
 export default function StoreLogin({history}) {
+  const [loading, setLoading] = useState(true);
+
   // 카카오 연동/로그인
   const login = res => {
     axios.post('/api/store', res).then(({data}) => {
@@ -23,10 +26,12 @@ export default function StoreLogin({history}) {
     const token = localStorage.getItem('storeToken');
     axios.get(`/api/store/${token}`).then(({data}) => {
         if(data.result == 1 && data.store) return history.push('/');
+
+        setLoading(true);
     });
   }, [])
 
-  return (
+  return loading ? <Loader loading={loading} /> :  (
     <Card
       style={{
         textAlign: "center",

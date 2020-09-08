@@ -5,9 +5,11 @@ import {Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Button} fro
 import PageTitle from "../../components/common/PageTitle";
 import {Link} from 'react-router-dom';
 import {formatDate, pointType, comma} from '../../utils/common';
+import Loader from '../Loader';
 
 export default function Order({location, history}) {
     const [order, setOrder] = useState();
+    const [loading, setLoading] = useState(true);
     
     // 주문 정보 가져오기, 주문 id가 없을 경우 매장 선택화면으로 이동
     useEffect(() => {
@@ -17,11 +19,13 @@ export default function Order({location, history}) {
         axios.get(`/api/order/${query.id}`)
         .then(({data}) => {
             if(!data.order) return history.push('/orderstore');
+            
             setOrder(data.order);
+            setLoading(false);
         })
     }, [])
 
-    return (
+    return loading ? <Loader loading={loading} /> : (
         <>
             {order &&
                 <Container fluid className="main-content-container px-4">

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Col } from "shards-react";
+import {Link} from "react-router-dom";
 
 import SidebarMainNavbar from "./SidebarMainNavbar";
 import SidebarSearch from "./SidebarSearch";
@@ -52,7 +53,9 @@ class MainSidebar extends React.Component {
         lg={{ size: 2 }}
         md={{ size: 3 }}
       >
-        <SidebarMainNavbar hideLogoText={this.props.hideLogoText} />
+        <Link to="/">
+          <SidebarMainNavbar /* hideLogoText={this.props.hideLogoText} */ />
+        </Link>
         <SidebarSearch />
         <SidebarNavItems />
       </Col>

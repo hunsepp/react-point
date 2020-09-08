@@ -18,7 +18,7 @@ class SidebarMainNavbar extends React.Component {
   }
 
   render() {
-    const { hideLogoText } = this.props;
+    // const { hideLogoText } = this.props;
     return (
       <div className="main-navbar">
         <Navbar
@@ -34,7 +34,7 @@ class SidebarMainNavbar extends React.Component {
               <img
                 id="main-logo"
                 className="d-inline-block align-top mr-1"
-                style={{ maxWidth: "100px" }}
+                style={{ maxWidth: "80px" }}
                 src={require("../../../images/logo.png")}
                 alt="KUNITÉ"
               />

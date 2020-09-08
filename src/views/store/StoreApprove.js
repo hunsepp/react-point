@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Card, CardBody, Button} from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
 import axios from 'axios';
+import Loader from '../Loader';
 
 export default function StoreApprove({history}) {
     const [storeList, setStoreList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // 매장 승인 처리
     const approve = id => {
+        setLoading(true);
+        
         axios.put(`/api/approve`, {id})
         .then(({data}) => {
             if(data.result == 1) getStoreList();
@@ -19,6 +23,7 @@ export default function StoreApprove({history}) {
         axios.get(`/api/approve`)
         .then(({data}) => {
             setStoreList(data.stores);
+            setLoading(false);
         });
     }
 
@@ -30,11 +35,11 @@ export default function StoreApprove({history}) {
             if(data.result == 0 || !data.store) return history.push('/storelogin');
 
             // 계정 정보가 있을 경우 승인 요청 중인 매장목록 받아오기
-            getStoreList(data.store._id);
+            getStoreList();
         });
     }, [])
 
-    return (
+    return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
             <Row noGutters className="page-header py-4">
                 <PageTitle

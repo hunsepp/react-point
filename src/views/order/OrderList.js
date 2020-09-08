@@ -4,9 +4,11 @@ import PageTitle from "../../components/common/PageTitle";
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {formatDate, pointType, comma} from '../../utils/common';
+import Loader from '../Loader';
 
-export default function Point({history}) {
+export default function OrderList({history}) {
     const [orderList, setOrderList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // 주문 상세보기
     const orderInfo = id => {
@@ -23,14 +25,16 @@ export default function Point({history}) {
                 // 유저 어드레스로 주문 기록 가져오기
                 axios.get(`/api/order/list/${data.kuser.address}`)
                 .then(({data}) => {
-                    if(data.result == 1) setOrderList(data.orderList);
-                    else console.log(data);
+                    if(data.result == 1) {
+                        setOrderList(data.orderList);
+                        setLoading(false);
+                    } else console.log(data);
                 })
             }
         })
     }, [])
 
-    return (
+    return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
             <Row noGutters className="page-header py-4">
                 <PageTitle

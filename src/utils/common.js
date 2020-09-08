@@ -1,3 +1,5 @@
+import {useState} from 'react';
+
 // 날짜 포맷 변경
 function formatDate(date) { 
     const d = new Date(date)
@@ -22,8 +24,16 @@ function pointType(point) {
     else return "사용"
 }
 
+const useInput = (initialState) => {
+    const [value, setValue] = useState(initialState);
+    const onChange = e => setValue(e.target.value);
+    const reset = resetValue => setValue(resetValue);
+    return {value, onChange, reset};
+}
+
 export {
     formatDate,
     pointType,
-    comma
+    comma,
+    useInput
 }

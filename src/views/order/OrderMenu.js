@@ -6,6 +6,7 @@ import PageTitle from '../../components/common/PageTitle';
 import americano from '../../images/coffee_Img/americano.png';
 import caffeLatte from '../../images/coffee_Img/caffeLatte.jpg';
 import espresso from '../../images/coffee_Img/espresso.jpg';
+import Loader from '../Loader';
 
 export default function({location, history}) {
     const [menuList, setMenuList] = useState([]);
@@ -13,7 +14,7 @@ export default function({location, history}) {
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState();
     const imgList = [americano, caffeLatte, espresso];
-    let user;
+    const [loading, setLoading] = useState(true);
 
     // 선택한 메뉴 추가
     const menuSelect = menu => {
@@ -25,10 +26,9 @@ export default function({location, history}) {
             const changeList = selectList.filter((select) => {
                 if(select.name == menu.name) {
                     select.count++;
-                    return select
-                } else {
-                    return select;
                 }
+                
+                return select;
             })
             setSelectList(changeList);
             
@@ -78,10 +78,11 @@ export default function({location, history}) {
         axios.get(`/api/menu/${query.id}`)
         .then(({data}) => {
             setMenuList(data.menus);
+            setLoading(false);
         })
     }, [])
 
-    return (
+    return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
             <Col lg="6" md="12" className="mb-4">
                 <Row noGutters className="page-header py-4">
