@@ -1,24 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Button} from "shards-react";
+import {Container, Row, Col, Card, CardBody, Button} from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import {formatDate, pointType, comma} from '../../utils/common';
 
 export default function Point({history}) {
-    const [pointList, setPointList] = useState([]);
     const [orderList, setOrderList] = useState([]);
-
-    // 날짜 포맷 변경
-    function formatDate(date) { 
-        const d = new Date(date)
-        const year = d.getFullYear(); 
-        let month = '' + (d.getMonth() + 1)
-        let day = '' + d.getDate()
-        
-        if (month.length < 2) month = '0' + month; 
-        if (day.length < 2) day = '0' + day; 
-        
-        return [year, month, day].join('-'); 
-    }
 
     // 주문 상세보기
     const orderInfo = id => {
@@ -32,13 +20,6 @@ export default function Point({history}) {
         .then(({data}) => {
             if(data.result == 0 || !data.kuser) return history.push('/login');
             else {
-                // 유저 어드레스로 토큰 히스토리 가져오기
-                axios.get(`/api/point/${data.kuser.address}`)
-                .then(({data}) => {
-                    if(data.result == 1) setPointList(data.pointList);
-                    else console.log(data);
-                })
-
                 // 유저 어드레스로 주문 기록 가져오기
                 axios.get(`/api/order/list/${data.kuser.address}`)
                 .then(({data}) => {
@@ -79,11 +60,15 @@ export default function Point({history}) {
                                 {orderList?.map((order) => {
                                     return (
                                         <tr key={order._id}>
-                                            <td onClick={() => history.push(`/ordermenu?id=${order.store._id}`)}>{order.store.name}</td>
+                                            <td>
+                                                <Link to={`/ordermenu?id=${order.store._id}`}>
+                                                    {order.store.name}
+                                                </Link>
+                                            </td>
                                             <td>{formatDate(order.create)}</td>
-                                            <td>{order.point >= 0 ? "적립" : "사용"}</td>
-                                            <td>{order.point}KUN</td>
-                                            <td>{order.total}원</td>
+                                            <td>{pointType(order.point)}</td>
+                                            <td>{comma(order.point)}KUN</td>
+                                            <td>{comma(order.total)}원</td>
                                             <td>
                                                 <Button theme="secondary" onClick={() => orderInfo(order._id)}>확인</Button>
                                             </td>

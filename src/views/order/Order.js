@@ -3,27 +3,11 @@ import qs from 'qs';
 import axios from 'axios';
 import {Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Button} from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
+import {Link} from 'react-router-dom';
+import {formatDate, pointType, comma} from '../../utils/common';
 
 export default function Order({location, history}) {
     const [order, setOrder] = useState();
-
-    // 날짜 포맷 변경
-    function formatDate(date) { 
-        const d = new Date(date)
-        const year = d.getFullYear(); 
-        let month = '' + (d.getMonth() + 1)
-        let day = '' + d.getDate()
-        
-        if (month.length < 2) month = '0' + month; 
-        if (day.length < 2) day = '0' + day; 
-        
-        return [year, month, day].join('-'); 
-    }
-
-    // 금액에 , 찍기
-    function comma(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
     
     // 주문 정보 가져오기, 주문 id가 없을 경우 매장 선택화면으로 이동
     useEffect(() => {
@@ -62,7 +46,11 @@ export default function Order({location, history}) {
                                     <Row>
                                         <Col className="ml-auto">매장명</Col>
                                         <Col className="d-flex px-3 border-0 ">
-                                            <p className="ml-auto">{order.store.name}</p>
+                                            <p className="ml-auto">
+                                                <Link to={`/ordermenu?id=${order.store._id}`}>
+                                                    {order.store.name}
+                                                </Link>
+                                            </p>
                                         </Col>
                                     </Row>
                                     <Row>
@@ -78,9 +66,15 @@ export default function Order({location, history}) {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col className="ml-auto">적립 포인트</Col>
+                                        <Col className="ml-auto">구분</Col>
                                         <Col className="d-flex px-3 border-0 ">
-                                            <p className="ml-auto">{order.point}KUN</p>
+                                            <p className="ml-auto">{pointType(order.point)}</p>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col className="ml-auto">포인트</Col>
+                                        <Col className="d-flex px-3 border-0 ">
+                                            <p className="ml-auto">{comma(order.point)}KUN</p>
                                         </Col>
                                     </Row>
                                 </CardBody>
