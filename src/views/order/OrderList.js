@@ -74,7 +74,7 @@ export default function Point({history}) {
                                             </td>
                                             <td>
                                                 <a href={`https://baobab.scope.klaytn.com/tx/${order.txHash}`} target="_blank">
-                                                    <Button theme="secondary">확인</Button>
+                                                    <Button theme="secondary" outline>확인</Button>
                                                 </a>
                                             </td>
                                         </tr>

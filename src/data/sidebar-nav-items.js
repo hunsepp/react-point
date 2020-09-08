@@ -86,5 +86,10 @@ export default function() {
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/orderlist",
     },
+    {
+      title: "매장승인",
+      htmlBefore: '<i class="material-icons">note_add</i>',
+      to: "/approve",
+    },
   ];
 }
