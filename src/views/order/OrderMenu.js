@@ -9,6 +9,9 @@ import {InputGroup,
     CardBody, 
     CardHeader, 
     Button, 
+    Modal,
+    ModalHeader,
+    ModalBody,
     CardFooter,
     InputGroupText,
     InputGroupAddon,
@@ -51,6 +54,7 @@ export default function({location, history}) {
     const inputPrivate = useInput('0x3743fcf1ba8f2c9175674f6f470a8de919a91c3ef54cd6d9276cb011d654c189');
     const minusToken = useInput(0);
     const [list, setList] = useState([]);
+    const [stores, setStores] = useState([]);
     let user;
 
     // 선택한 메뉴 추가
@@ -76,6 +80,30 @@ export default function({location, history}) {
             setSelectList(prev => prev.concat(menu))
         }        
     }
+    
+    // 선택한 메뉴 빼기
+    const menuMinus = menu => {
+        // 선택된 메뉴 금액 총 금액에 빼기
+        setTotal(prev => prev - parseInt(menu.price));
+    
+        // 이미 선택한 메뉴일 때 개수만 빼기
+        if(selectList.includes(menu)) {
+            const changeList = selectList.filter((select) => {
+                if(select.name == menu.name) {
+                    select.count--;
+                    return select
+                } else {
+                    return select;
+                }
+            })
+            setSelectList(changeList);
+            
+        // 선택되지 않은 메뉴일 때 리스트에 추가
+        } else {
+            menu.count = 0;
+            setSelectList(prev => prev.concat(menu))
+        }        
+    }
 
     // 선택한 메뉴 모두 없애고 총 가격 0으로
     const clearMenu = () => {
@@ -87,7 +115,6 @@ export default function({location, history}) {
     const orderMenu = () => {
         if(selectList.length == 0) return;
         if(!address) return;
-
         axios.post('/api/order', {selectList, total, address})
         .then(({data}) => {
             if(data.result ==1) {
@@ -139,18 +166,29 @@ export default function({location, history}) {
         .then(({data}) => {
             setMenuList(data.menus);
         })
+
+        // 매장 목록 가져오기
+        
+        axios.get('/api/store')
+        .then(({data}) => {
+            setStores(data.stores);
+        })
     }, [])
 
     return (
         <Container fluid className="main-content-container px-4">            
             <Col lg="6" md="12" className="mb-4">
-                <Row noGutters className="page-header py-4">
-                    <PageTitle sm="4" title="메뉴 선택" className="text-sm-left" />
-                </Row>
-                
+                {stores.map((store, idx) => (
+                    <Col key={idx}>
+                        <Row noGutters className="page-header py-4">
+                            <PageTitle sm="4" title="메뉴 선택" className="text-sm-left" />
+                            {store.name}
+                        </Row>
+                    </Col>
+                ))}
                 <Row>
                     {menuList.map((menu, idx) => (
-                        <Col lg="6" sm="12" className="mb-4" key={idx} onClick={() => menuSelect(menu)}>
+                        <Col lg="6" sm="12" className="mb-4" key={idx} >
                             <Card style={{ maxWidth: "500px" }}>
                                 <div className="card-post__image" style={{ backgroundImage: `url('${imgList[idx]}')` }}></div>
                                 {/* <CardImg top src={imgList[idx]}/> */}
@@ -158,6 +196,7 @@ export default function({location, history}) {
                                     <p style={menuName} className="card-title">{menu.name}</p>
                                     {/* <p className="card-text d-block mb-3"></p> */}
                                     <span className="text-muted">{menu.price}원</span>
+                                    <Button pill theme="warning" size="sm" onClick={() => menuSelect(menu)}>담기</Button>
                                 </CardFooter>
                             </Card>
                         </Col>
@@ -166,7 +205,7 @@ export default function({location, history}) {
             </Col>
             <Row>
                 <Col  sm={{ size: 8, order: 2, offset: 2 }}>
-                    <Card small className="mb-4">
+                    <Card small className="mb-4" >
                         <CardHeader className="border-bottom">
                             <p className="m-0 text-center">주문 목록(적립예정쿤) </p>
                             <p className="m-0 text-center" style={point2}>{total/100}</p>
@@ -176,14 +215,22 @@ export default function({location, history}) {
                                 <Row key={idx}>
                                     <Col className="ml-auto">{select.name} {select.count}</Col>
                                     <Col className="d-flex px-3 border-0 ">
+                                    <p className="ml-auto">{select.price * select.count}원</p>
                                     <ButtonGroup size="sm" className="mr-2">
-                                        <Button>+</Button>
-                                        <Button theme="danger">-</Button>
-                                    </ButtonGroup><p className="ml-auto">{select.price * select.count}원</p>
+                                        <Button onClick={() => menuSelect(select)}>+</Button>
+                                        <Button theme="danger" onClick={() => menuMinus(select)}>-</Button>
+                                    </ButtonGroup>
                                     </Col>
                                 </Row>
                             ))}
-
+                            {/* {selectList.map((menu, idx) => (      
+                                <Row key={idx}>
+                                    <ButtonGroup size="sm" className="mr-2">
+                                        <Button >+</Button>
+                                        <Button theme="danger" >-</Button>
+                                    </ButtonGroup>
+                                </Row>
+                            ))} */}
                             {selectList.length == 0 ?
                                 <h5 className="card-title text-center">주문할 제품을 선택해주세요</h5>
                             :
@@ -191,18 +238,25 @@ export default function({location, history}) {
                             }
                         </CardBody>
 
-                       <div>
-                            <Button size="sm" onClick={useToken}>포인트사용</Button>
-                            <FormInput placeholder="금액을 입력해주세요."/>
-                        </div>                   
+                            <Col>
+                                <Button pill size="sm" onClick={useToken}>포인트사용</Button>
+                                <FormInput placeholder="금액을 입력해주세요."/>
+                            </Col>
                         
+                            <Col>
+                                <Button pill theme="success" size="sm" >요청사항</Button>
+                                <FormInput placeholder="예) 휘핑 많이 올려주세요~"/>
+                            </Col>
+
                         <CardFooter>
                             <Row>
                                 <Col>
-                                    <Button theme="secondary" outline size="sm" className="ml-auto" onClick={clearMenu}>비우기</Button>
+                                    <Button block theme="secondary" className="ml-auto" onClick={clearMenu}>비우기</Button>
                                 </Col>                            
+                            </Row>
+                            <Row>
                                 <Col className="d-flex px-3 border-0">
-                                    <Button theme="secondary" size="sm" className="ml-auto" onClick={orderMenu}>주문하기</Button>
+                                    <Button block className="ml-auto" onClick={orderMenu}>주문하기</Button>
                                 </Col>
                             </Row>
                         </CardFooter>
