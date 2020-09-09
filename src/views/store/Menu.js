@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button} from "shards-react";
+import {Container, Row, Col, Card, CardHeader, CardBody, FormInput, Button, FormSelect} from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
 import {useInput} from '../../utils/common';
 import Loader from '../Loader';
 
 export default function Menu({history}) {
     const [store, setStore] = useState();
-    const [menuList, setMenuList] = useState();
+    const [menuList, setMenuList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const menuName = useInput('');
+    const menuCategory = useInput('');
     const menuPrice = useInput(0);
 
     // 메뉴 등록
@@ -20,12 +22,11 @@ export default function Menu({history}) {
         axios.post('/api/menu', {
             id: store._id,
             name: menuName.value,
-            price: menuPrice.value
+            price: menuPrice.value,
+            category: menuCategory.value
         }).then(({data}) => {
             if(data.result == 0) return;
             getMenuList(store._id);
-            menuName.reset('');
-            menuPrice.reset(0);
         });
     }
 
@@ -44,6 +45,14 @@ export default function Menu({history}) {
         axios.get(`/api/menu/${id}`).then(({data}) => {
             if(data.result == 1) {
                 setMenuList(data.menus);
+                setCategoryList(data.category);
+
+                // 입력값 초기화
+                menuName.reset('');
+                menuPrice.reset(0);
+                menuCategory.reset('');
+
+                // 로딩 종료
                 setLoading(false);
             };
         });
@@ -84,6 +93,16 @@ export default function Menu({history}) {
                                 <FormInput id="menu-name" type="text" {...menuName} />
                             </Col>
                             <Col lg="6" md="12" className="form-group">
+                                <label htmlFor="menu-category">카테고리</label>
+                                <FormSelect id="feInputState" {...menuCategory}>
+                                    <option value="">선택</option>
+                                    {categoryList.map(category => {
+                                        return <option>{category}</option>
+                                    })}
+                                </FormSelect>
+                                <FormInput id="menu-category" type="text" {...menuCategory} />
+                            </Col>
+                            <Col lg="6" md="12" className="form-group">
                                 <label htmlFor="menu-price">가격</label>
                                 <FormInput id="menu-price" type="number" {...menuPrice} />
                             </Col>
@@ -105,15 +124,17 @@ export default function Menu({history}) {
                             <thead className="bg-light">
                                 <tr>
                                     <th scope="col" className="border-0">메뉴명</th>
+                                    <th scope="col" className="border-0">카테고리</th>
                                     <th scope="col" className="border-0">가격</th>
                                     <th scope="col" className="border-0">기능</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {menuList?.map((menu) => {
+                            {menuList.map((menu) => {
                                 return (
                                     <tr key={menu._id}>
                                         <td>{menu.name}</td>
+                                        <td>{menu.category}</td>
                                         <td>{menu.price}</td>
                                         <td><Button outline theme="secondary" size="sm" onClick={() => menuDel(menu._id)}>삭제</Button></td>
                                     </tr>
