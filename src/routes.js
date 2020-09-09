@@ -29,6 +29,7 @@ import Order from "./views/order/Order";
 import OrderList from "./views/order/OrderList";
 import Main from "./views/main/Main"
 import StoreApprove from "./views/store/StoreApprove";
+import Map from "./views/Map";
 
 export default [
   {
@@ -152,5 +153,10 @@ export default [
     path: "/approve",
     layout: DefaultLayout,
     component: StoreApprove
+  },
+  {
+    path: "/map",
+    layout: DefaultLayout,
+    component: Map
   },
 ];
