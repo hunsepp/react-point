@@ -28,6 +28,7 @@ import OrderMenu from "./views/order/OrderMenu";
 import Order from "./views/order/Order";
 import OrderList from "./views/order/OrderList";
 import Main from "./views/main/Main"
+import Map from "./views/Map";
 
 export default [
   {
@@ -145,5 +146,10 @@ export default [
     path: "/main",
     layout: DefaultLayout,
     component: Main
+  },
+  {
+    path: "/map",
+    layout: DefaultLayout,
+    component: Map
   },
 ];
