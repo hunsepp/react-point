@@ -72,7 +72,7 @@ export default function() {
     //   to: "/coffee",
     // },
     // {
-    //   title: "점포관리",
+    //   title: "내 쿠폰",
     //   htmlBefore: '<i class="material-icons">view_module</i>',
     //   to: "/mystore",
     // },

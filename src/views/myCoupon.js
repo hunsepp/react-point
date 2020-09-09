@@ -4,10 +4,10 @@ import {
     Row,
     Col,
     Card,
-    CardBody,
-    CardFooter,
-    Badge,
-    Button
+    // CardBody,
+    // CardFooter,
+    // Badge,
+    // Button
   } from "shards-react";
   
 import PageTitle from "../components/common/PageTitle";
