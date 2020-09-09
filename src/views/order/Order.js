@@ -87,10 +87,19 @@ export default function Order({location, history}) {
                                     <Row>
                                         <Col className="text-center view-report">
                                             <a href={`https://baobab.scope.klaytn.com/tx/${order.txHash}`} target="_blank">
-                                                <Button theme="secondary">적립 TX 확인</Button>
+                                                <Button theme="secondary">포인트 TX 확인</Button>
                                             </a>
                                         </Col>
                                     </Row>
+                                    {order.stampHash &&
+                                        <Row>
+                                            <Col className="text-center view-report">
+                                                <a href={`https://baobab.scope.klaytn.com/tx/${order.stampHash}`} target="_blank">
+                                                    <Button theme="secondary">스탬프 TX 확인</Button>
+                                                </a>
+                                            </Col>
+                                        </Row>
+                                    }
                                 </CardFooter>
                             </Card>
                         </Col>
