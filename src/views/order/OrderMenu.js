@@ -38,6 +38,7 @@ const point2 = {
     color : "red"
 }
 
+
 const useInput = (initialState) => {
     const [value, setValue] = useState(initialState);
     const onChange = e => setValue(e.target.value);
@@ -180,10 +181,11 @@ export default function({location, history}) {
             <Col lg="6" md="12" className="mb-4">
                 {stores.map((store, idx) => (
                     <Col key={idx}>
-                        <Row noGutters className="page-header py-4">
-                            <PageTitle sm="4" title="메뉴 선택" className="text-sm-left" />
-                            {store.name}
-                        </Row>
+                        <Col noGutters className="page-header py-4">
+                            <PageTitle style={{color:"red"}}  sm="5" title={store.name} className="text-sm-left" />
+                            {store.address}
+                            
+                        </Col>
                     </Col>
                 ))}
                 <Row>
@@ -238,8 +240,8 @@ export default function({location, history}) {
                             }
                         </CardBody>
 
-                            <Col>
-                                <Button pill size="sm" onClick={useToken}>포인트사용</Button>
+                            <Col>                                
+                                <Button pill size="sm" onClick={useToken}>포인트사용</Button>사용가능한 포인트 : 
                                 <FormInput placeholder="금액을 입력해주세요."/>
                             </Col>
                         
