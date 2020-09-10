@@ -18,7 +18,9 @@ import {InputGroup,
     CardImg,
     ButtonGroup,
     ButtonToolbar,
-    FormInput
+    FormInput,
+    ListGroup,
+    ListGroupItem
 } from "shards-react";
 import PageTitle from '../../components/common/PageTitle';
 import americano from '../../images/coffee_Img/americano.png';
@@ -47,11 +49,7 @@ export default function({location, history}) {
     const [address, setAddress] = useState();
     const imgList = [americano, caffeLatte, espresso];
     const [loading, setLoading] = useState(true);
-    const [result, setResult] = useState('ready');
-    const inputPrivate = useInput('0x3743fcf1ba8f2c9175674f6f470a8de919a91c3ef54cd6d9276cb011d654c189');
-    const minusToken = useInput(0);
-    const [list, setList] = useState([]);
-    const [stores, setStores] = useState([]);
+    const [store, setStore] = useState();
 
     // 선택한 메뉴 추가
     const menuSelect = menu => {
@@ -81,23 +79,16 @@ export default function({location, history}) {
         // 선택된 메뉴 금액 총 금액에 빼기
         setTotal(prev => prev - parseInt(menu.price));
     
-        // 이미 선택한 메뉴일 때 개수만 빼기
-        if(selectList.includes(menu)) {
-            const changeList = selectList.filter((select) => {
-                if(select.name == menu.name) {
-                    select.count--;
-                    return select
-                } else {
-                    return select;
+        const changeList = selectList.filter((select) => {
+            if(select.name == menu.name) {
+                if(select.count > 1) {
+                    return select.count--
                 }
-            })
-            setSelectList(changeList);
-            
-        // 선택되지 않은 메뉴일 때 리스트에 추가
-        } else {
-            menu.count = 0;
-            setSelectList(prev => prev.concat(menu))
-        }        
+            }else {
+                return select;
+            }
+        })
+        setSelectList(changeList);
     }
 
     // 선택한 메뉴 모두 없애고 총 가격 0으로
@@ -119,28 +110,6 @@ export default function({location, history}) {
             }
         })
     }
-    // 토큰 사용하기 
-    const useToken = () => {
-        setResult('pending...');
-        axios.post('/api/use', {
-          privateKey: inputPrivate.value, 
-          value: minusToken.value
-        })
-        .then(({data}) => {
-          // 토큰 내역 업데이트
-          tokenList();
-    
-          // 결과 업데이트
-          setResult(
-            <a target="_blank" href={`https://baobab.scope.klaytn.com/tx/${data.transactionHash}?tabId=eventLog`}>{data.transactionHash}</a>
-          )
-        });
-      }
-
-    const tokenList = () => {
-    axios.get('/api/list')
-    .then(({data}) => setList(data.items));
-    }
 
     useEffect(() => {
         // 액세스 토큰으로 유저 정보 확인, 없을 경우 로그인 화면으로 이동
@@ -160,29 +129,38 @@ export default function({location, history}) {
         axios.get(`/api/menu/${query.id}`)
         .then(({data}) => {
             setMenuList(data.menus);
+            setStore(data.menus[0].store);
             setLoading(false);
-        })
-
-        // 매장 목록 가져오기
-        
-        axios.get('/api/store')
-        .then(({data}) => {
-            setStores(data.stores);
         })
     }, [])
 
     return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
             <Col lg="6" md="12" className="mb-4">
-                {stores.map((store, idx) => (
-                    <Col key={idx}>
-                        <Col noGutters className="page-header py-4">
-                            <PageTitle style={{color:"red"}}  sm="5" title={store.name} className="text-sm-left" />
-                            {store.address}
-                            
-                        </Col>
-                    </Col>
-                ))}
+                <Card small className="card-post card-post--1">
+                    <div
+                    className="card-post__image"
+                    style={{
+                        backgroundImage: `url(${require("../../images/content-management/9.jpeg")})`,
+                    }}
+                    ></div>
+
+                    <CardBody>
+                    <h5 className="card-title">{store?.name}</h5>
+
+                    <ListGroup small flush className="list-group-small">
+                        <ListGroupItem className="d-flex px-3 border-top border-bottom">
+                        <span className="text-semibold text-fiord-blue">상태</span>
+                        <span className="ml-auto text-right text-semibold text-reagent-gray">
+                            {store?.approve}
+                        </span>
+                        </ListGroupItem>
+                    </ListGroup>
+                    </CardBody>
+                </Card>
+            </Col>
+
+            <Col lg="6" md="12" className="mb-4">
                 <Row>
                     {menuList.map((menu, idx) => (
                         <Col lg="6" sm="12" className="mb-4" key={idx} >
@@ -220,14 +198,6 @@ export default function({location, history}) {
                                     </Col>
                                 </Row>
                             ))}
-                            {/* {selectList.map((menu, idx) => (      
-                                <Row key={idx}>
-                                    <ButtonGroup size="sm" className="mr-2">
-                                        <Button >+</Button>
-                                        <Button theme="danger" >-</Button>
-                                    </ButtonGroup>
-                                </Row>
-                            ))} */}
                             {selectList.length == 0 ?
                                 <h5 className="card-title text-center">주문할 제품을 선택해주세요</h5>
                             :
@@ -236,7 +206,7 @@ export default function({location, history}) {
                         </CardBody>
 
                             <Col>                                
-                                <Button pill size="sm" onClick={useToken}>포인트사용</Button>사용가능한 포인트 : 
+                                <Button pill size="sm">포인트사용</Button>사용가능한 포인트 : 
                                 <FormInput placeholder="금액을 입력해주세요."/>
                             </Col>
                         
