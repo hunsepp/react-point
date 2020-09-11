@@ -15,6 +15,7 @@ function formatDate(date) {
 
 // 금액에 , 찍기
 function comma(x) {
+    if(x <= 0) x *= -1;
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

@@ -28,6 +28,7 @@ import caffeLatte from '../../images/coffee_Img/caffeLatte.jpg';
 import espresso from '../../images/coffee_Img/espresso.jpg';
 import Loader from '../Loader';
 import {useInput} from '../../utils/common';
+import { PropagateLoader } from 'react-spinners';
 
 const menuName = {
     color:"DarkSeaGreen",
@@ -50,6 +51,8 @@ export default function({location, history}) {
     const imgList = [americano, caffeLatte, espresso];
     const [loading, setLoading] = useState(true);
     const [store, setStore] = useState();
+    const point = useInput();
+    const [pointUsed, setPointUsed] = useState(false)
 
     // 선택한 메뉴 추가
     const menuSelect = menu => {
@@ -97,11 +100,19 @@ export default function({location, history}) {
         setTotal(0);
     }
 
+    // 포인트 사용
+    const usingPoint = () => {
+        setPointUsed(true);
+        setTotal(prev => prev - point.value);
+    }
+
     // 주문하기
     const orderMenu = () => {
         if(selectList.length == 0) return;
         if(!address) return;
-        axios.post('/api/order', {selectList, total, address})
+        if(!window.confirm('정말 주문하시겠습니까?')) return;
+
+        axios.post('/api/order', {selectList, total, address, point: point.value})
         .then(({data}) => {
             if(data.result ==1) {
                 history.push(`/order?id=${data.order}`)
@@ -136,55 +147,57 @@ export default function({location, history}) {
 
     return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
-            <Col lg="6" md="12" className="mb-4">
-                <Card small className="card-post card-post--1">
-                    <div
-                    className="card-post__image"
-                    style={{
-                        backgroundImage: `url(${require("../../images/content-management/9.jpeg")})`,
-                    }}
-                    ></div>
-
-                    <CardBody>
-                    <h5 className="card-title">{store?.name}</h5>
-
-                    <ListGroup small flush className="list-group-small">
-                        <ListGroupItem className="d-flex px-3 border-top border-bottom">
-                        <span className="text-semibold text-fiord-blue">상태</span>
-                        <span className="ml-auto text-right text-semibold text-reagent-gray">
-                            {store?.approve}
-                        </span>
-                        </ListGroupItem>
-                    </ListGroup>
-                    </CardBody>
-                </Card>
-            </Col>
-
-            <Col lg="6" md="12" className="mb-4">
-                <Row>
-                    {menuList.map((menu, idx) => (
-                        <Col lg="6" sm="12" className="mb-4" key={idx} >
-                            <Card style={{ maxWidth: "500px" }}>
-                                <div className="card-post__image" style={{ backgroundImage: `url('${imgList[idx]}')` }}></div>
-                                {/* <CardImg top src={imgList[idx]}/> */}
-                                <CardFooter>
-                                    <p style={menuName} className="card-title">{menu.name}</p>
-                                    {/* <p className="card-text d-block mb-3"></p> */}
-                                    <span className="text-muted">{menu.price}원</span>
-                                    <Button pill theme="warning" size="sm" onClick={() => menuSelect(menu)}>담기</Button>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </Col>
             <Row>
-                <Col  sm={{ size: 8, order: 2, offset: 2 }}>
+                <Col lg="6" md="12" className="mb-4">
+                    <Card small className="card-post card-post--1">
+                        <div
+                        className="card-post__image"
+                        style={{
+                            backgroundImage: `url(${require("../../images/content-management/9.jpeg")})`,
+                        }}
+                        ></div>
+
+                        <CardBody>
+                        <h5 className="card-title">{store?.name}</h5>
+
+                        <ListGroup small flush className="list-group-small">
+                            <ListGroupItem className="d-flex px-3 border-top border-bottom">
+                            <span className="text-semibold text-fiord-blue">상태</span>
+                            <span className="ml-auto text-right text-semibold text-reagent-gray">
+                                {store?.approve}
+                            </span>
+                            </ListGroupItem>
+                        </ListGroup>
+                        </CardBody>
+                    </Card>
+                </Col>
+
+                <Col lg="6" sm="12" className="mb-4">
+                    <Row>
+                        {menuList.map((menu, idx) => (
+                            <Col sm="6" className="mb-4" key={idx} >
+                                <Card>
+                                    <div className="card-post__image" style={{ backgroundImage: `url('${imgList[idx]}')` }}></div>
+                                    <CardFooter>
+                                        <p style={menuName} className="card-title">{menu.name}</p>
+                                        <span className="text-muted">{menu.price}원</span>
+                                        <Button pill theme="warning" size="sm" onClick={() => menuSelect(menu)}>담기</Button>
+                                    </CardFooter>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                </Col>
+            </Row>
+            <Row>
+                <Col lg="6" md="12" className="mb-4">
                     <Card small className="mb-4" >
-                        <CardHeader className="border-bottom">
-                            <p className="m-0 text-center">주문 목록(적립예정쿤) </p>
-                            <p className="m-0 text-center" style={point2}>{total/100}</p>
-                        </CardHeader>
+                        {!pointUsed &&
+                            <CardHeader className="border-bottom">
+                                <p className="m-0 text-center">주문 목록(적립예정쿤) </p>
+                                <p className="m-0 text-center" style={point2}>{total/100}</p>
+                            </CardHeader>
+                        }
                         <CardBody>
                             {selectList.map((select, idx) => (
                                 <Row key={idx}>
@@ -206,8 +219,8 @@ export default function({location, history}) {
                         </CardBody>
 
                             <Col>                                
-                                <Button pill size="sm">포인트사용</Button>사용가능한 포인트 : 
-                                <FormInput placeholder="금액을 입력해주세요."/>
+                                <Button pill size="sm" onClick={usingPoint} disabled={pointUsed}>포인트사용</Button>사용가능한 포인트 : 
+                                <FormInput type="number" placeholder="금액을 입력해주세요." {...point} disabled={pointUsed} />
                             </Col>
                         
                             <Col>

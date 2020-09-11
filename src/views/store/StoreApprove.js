@@ -58,7 +58,7 @@ export default function StoreApprove({history}) {
                                     <tr>
                                         <th scope="col" className="border-0">매장명</th>
                                         <th scope="col" className="border-0">업종</th>
-                                        <th scope="col" className="border-0">전화번호</th>
+                                        {/* <th scope="col" className="border-0">전화번호</th> */}
                                         <th scope="col" className="border-0">승인여부</th>
                                         <th scope="col" className="border-0">사업자등록증</th>
                                         <th scope="col" className="border-0">기능</th>
@@ -70,7 +70,7 @@ export default function StoreApprove({history}) {
                                             <tr key={store._id}>
                                                 <td>{store.name}</td>
                                                 <td>{store.category}</td>
-                                                <td>2</td>
+                                                {/* <td>2</td> */}
                                                 <td>{store.approve}</td>
                                                 <td><Button theme="secondary" outline disabled>보기</Button></td>
                                                 <td><Button theme="secondary" onClick={() => approve(store._id)}>승인</Button></td>
