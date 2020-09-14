@@ -91,15 +91,6 @@ export default function Order({location, history}) {
                                             </a>
                                         </Col>
                                     </Row>
-                                    {order.stampHash &&
-                                        <Row>
-                                            <Col className="text-center view-report">
-                                                <a href={`https://baobab.scope.klaytn.com/tx/${order.stampHash}`} target="_blank">
-                                                    <Button theme="secondary">스탬프 TX 확인</Button>
-                                                </a>
-                                            </Col>
-                                        </Row>
-                                    }
                                 </CardFooter>
                             </Card>
                         </Col>

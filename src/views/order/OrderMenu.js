@@ -22,13 +22,12 @@ import {InputGroup,
     ListGroup,
     ListGroupItem
 } from "shards-react";
-import PageTitle from '../../components/common/PageTitle';
 import americano from '../../images/coffee_Img/americano.png';
 import caffeLatte from '../../images/coffee_Img/caffeLatte.jpg';
 import espresso from '../../images/coffee_Img/espresso.jpg';
 import Loader from '../Loader';
 import {useInput} from '../../utils/common';
-import { PropagateLoader } from 'react-spinners';
+import StoreInfo from '../store/StoreInfo';
 
 const menuName = {
     color:"DarkSeaGreen",
@@ -50,7 +49,6 @@ export default function({location, history}) {
     const [address, setAddress] = useState();
     const imgList = [americano, caffeLatte, espresso];
     const [loading, setLoading] = useState(true);
-    const [store, setStore] = useState();
     const point = useInput();
     const [pointUsed, setPointUsed] = useState(false)
 
@@ -140,39 +138,16 @@ export default function({location, history}) {
         axios.get(`/api/menu/${query.id}`)
         .then(({data}) => {
             setMenuList(data.menus);
-            setStore(data.menus[0].store);
             setLoading(false);
         })
     }, [])
 
     return loading ? <Loader loading={loading} /> : (
         <Container fluid className="main-content-container px-4">
-            <Row>
-                <Col lg="6" md="12" className="mb-4">
-                    <Card small className="card-post card-post--1">
-                        <div
-                        className="card-post__image"
-                        style={{
-                            backgroundImage: `url(${require("../../images/content-management/9.jpeg")})`,
-                        }}
-                        ></div>
+            <Row className="mt-3">
+                <StoreInfo store={menuList[0].store} />
 
-                        <CardBody>
-                        <h5 className="card-title">{store?.name}</h5>
-
-                        <ListGroup small flush className="list-group-small">
-                            <ListGroupItem className="d-flex px-3 border-top border-bottom">
-                            <span className="text-semibold text-fiord-blue">상태</span>
-                            <span className="ml-auto text-right text-semibold text-reagent-gray">
-                                {store?.approve}
-                            </span>
-                            </ListGroupItem>
-                        </ListGroup>
-                        </CardBody>
-                    </Card>
-                </Col>
-
-                <Col lg="6" sm="12" className="mb-4">
+                <Col lg="6" sm="12">
                     <Row>
                         {menuList.map((menu, idx) => (
                             <Col sm="6" className="mb-4" key={idx} >
@@ -188,8 +163,7 @@ export default function({location, history}) {
                         ))}
                     </Row>
                 </Col>
-            </Row>
-            <Row>
+            
                 <Col lg="6" md="12" className="mb-4">
                     <Card small className="mb-4" >
                         {!pointUsed &&
@@ -222,12 +196,6 @@ export default function({location, history}) {
                                 <Button pill size="sm" onClick={usingPoint} disabled={pointUsed}>포인트사용</Button>사용가능한 포인트 : 
                                 <FormInput type="number" placeholder="금액을 입력해주세요." {...point} disabled={pointUsed} />
                             </Col>
-                        
-                            <Col>
-                                <Button pill theme="success" size="sm" >요청사항</Button>
-                                <FormInput placeholder="예) 휘핑 많이 올려주세요~"/>
-                            </Col>
-
                         <CardFooter>
                             <Row>
                                 <Col>

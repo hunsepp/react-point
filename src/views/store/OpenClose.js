@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import {useInput} from "../../utils/common";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TimePickers() {
+export default function TimePickers({open, close}) {
   const classes = useStyles();
 
   return (
@@ -25,7 +26,7 @@ export default function TimePickers() {
             id="open"
             label="Open"
             type="time"
-            defaultValue="07:30"
+            {...open}            
             InputLabelProps={{
               shrink: true,
             }}
@@ -44,7 +45,7 @@ export default function TimePickers() {
             id="close"
             label="Close"
             type="time"
-            defaultValue="17:30"
+            {...close}
             InputLabelProps={{
               shrink: true,
             }}

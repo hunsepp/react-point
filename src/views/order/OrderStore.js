@@ -34,20 +34,27 @@ export default function OrderStore({history}){
         {stores.map((store, idx) => (
           <Col lg="3" md="6" sm="12" className="mb-4" key={idx} onClick={() => moveMenu(store._id)}>
             <Card small className="card-post card-post--1">
-              <div className="card-post__image" style={{ backgroundImage: `url(${require("../../images/content-management/"+(idx+1)+".jpeg")})` }}>
+              <div className="card-post__image" style={{ backgroundImage: `url(/api/upload/${store.account})` }}>
                 <Badge pill className={`card-post__category bg-dark`}
                 >{store.category}</Badge>
               </div>
               <CardBody>
                 <Row>
-                <Col lg="8">
+                <Col sm="8">
                 <h5 className="card-title">{store.name}</h5>
                 </Col>
-                <Col lg="4">
+                <Col sm="4">
                 <FontAwesomeIcon icon={faSearchLocation} color="black" size="2x" />
                 </Col>
                 </Row>
-                <p className="card-text d-block mb-3">{store.address}</p>
+                <p className="card-text d-block mt-3">{store.address}</p>
+                
+                <p className="card-text d-block">
+                  영업시간
+                  {store.open && store.close &&
+                    <span>　　{store.open} ~ {store.close}</span>
+                  }
+                </p>
               </CardBody>
             </Card>
           </Col>

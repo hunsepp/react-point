@@ -7,18 +7,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
-export default function CheckboxLabels() {
-  const [state, setState] = React.useState({
-    checkedA: false,
-    checkedB: false,
-    checkedC: false,
-    checkedD: false,
-    checkedE: false,
-  });
-
+export default function CheckboxLabels({option, setOption, read}) {
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    console.log(state);
+    if(read) return;
+    setOption({...option, [event.target.name]: event.target.checked });
   };
 
   return (
@@ -29,6 +21,7 @@ export default function CheckboxLabels() {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={handleChange}
+            checked={option.checkedA}
             name="checkedA"
           />
         }
@@ -40,6 +33,7 @@ export default function CheckboxLabels() {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={handleChange}
+            checked={option.checkedB}
             name="checkedB"
           />
         }
@@ -51,6 +45,7 @@ export default function CheckboxLabels() {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={handleChange}
+            checked={option.checkedC}
             name="checkedC"
           />
         }
@@ -62,6 +57,7 @@ export default function CheckboxLabels() {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={handleChange}
+            checked={option.checkedD}
             name="checkedD"
           />
         }
@@ -73,6 +69,7 @@ export default function CheckboxLabels() {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={handleChange}
+            checked={option.checkedE}
             name="checkedE"
           />
         }

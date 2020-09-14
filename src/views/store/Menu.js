@@ -88,11 +88,11 @@ export default function Menu({history}) {
                     </CardHeader>
                     <CardBody>
                         <Row>
-                            <Col lg="6" md="12" className="form-group">
+                            <Col sm="12" className="form-group">
                                 <label htmlFor="menu-name">메뉴명</label>
                                 <FormInput id="menu-name" type="text" {...menuName} />
                             </Col>
-                            <Col lg="6" md="12" className="form-group">
+                            <Col sm="12" className="form-group">
                                 <label htmlFor="menu-category">카테고리</label>
                                 <FormSelect id="feInputState" {...menuCategory}>
                                     <option value="">선택</option>
@@ -102,7 +102,7 @@ export default function Menu({history}) {
                                 </FormSelect>
                                 <FormInput id="menu-category" type="text" {...menuCategory} />
                             </Col>
-                            <Col lg="6" md="12" className="form-group">
+                            <Col sm="12" className="form-group">
                                 <label htmlFor="menu-price">가격</label>
                                 <FormInput id="menu-price" type="number" {...menuPrice} />
                             </Col>
