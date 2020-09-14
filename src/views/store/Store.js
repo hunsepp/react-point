@@ -10,6 +10,8 @@ import {
   FormInput,
   Button,
   FormTextarea,
+  InputGroup,
+  InputGroupAddon,
 } from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
 import {useInput} from '../../utils/common';
@@ -18,12 +20,12 @@ import Checkboxes from "./Checkboxes";
 import FileUpload from "./FileUpload";
 import OpenClose from "./OpenClose";
 import StoreInfro from "./StoreInfo"
+const {daum} = window;
 
 export default function Store({history}) {
   const [store, setStore] = useState();
   const name = useInput();
   const category = useInput();
-  const address = useInput();
   const discription = useInput();
   const [loading, setLoading] = useState(true);
   const [option, setOption] = useState({
@@ -35,6 +37,7 @@ export default function Store({history}) {
   });
   const open = useInput('07:30');
   const close = useInput('17:30');
+  const [address, setAddress] = useState();
 
   // 매장 정보 수정
   const storeMod = () => {
@@ -42,7 +45,7 @@ export default function Store({history}) {
       .put(`/api/store/${store.account}`, {
         name: name.value,
         category: category.value,
-        address: address.value,
+        address,
         discription: discription.value,
         approve: "승인",
         option,
@@ -63,6 +66,15 @@ export default function Store({history}) {
     })
   }
 
+  // 주소 검색
+  const addrSearch = () => {
+    new daum.Postcode({
+      oncomplete: data => {
+        setAddress(data.address);
+      }
+    }).open();
+  }
+
   // 액세스 토큰이 있을 경우 계정 정보 받아오기
   useEffect(() => {
       const token = localStorage.getItem('storeToken');
@@ -81,7 +93,7 @@ export default function Store({history}) {
 
     if(store?.name) name.reset(store.name);
     if(store?.category) category.reset(store.category);
-    if(store?.address) address.reset(store.address);
+    if(store?.address) setAddress(store.address);
     if(store?.discription) discription.reset(store.discription);
     if(store?.option) setOption(store.option);
     if(store?.open) open.reset(store.open);
@@ -117,8 +129,12 @@ export default function Store({history}) {
                   <OpenClose open={open} close={close} />
                 </Col>
                 <Col md="12" className="form-group">
-                  <label htmlFor="address">주소</label>
-                  <FormInput id="address" type="text" {...address} />
+                  <InputGroup seamless className="mb-3">
+                    <FormInput value={address} />
+                    <InputGroupAddon type="append">
+                      <Button theme="secondary" onClick={addrSearch} outline>검색</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
                 </Col>
 
                 <Col md="12" className="form-group">

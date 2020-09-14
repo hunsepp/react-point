@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Col, Card, CardBody, ListGroup, ListGroupItem,} from "shards-react";
 import Checkboxes from "./Checkboxes";
+const { kakao } = window;
 
 export default function StoreInfo({store}) {
+    useEffect(() => {
+        const geocoder = new kakao.maps.services.Geocoder();
+        // 입력된 주소 검색하여 좌표 확인
+        geocoder.addressSearch(store.address, (res, status) => {
+            if(status === "OK") {
+                // 확인된 좌표 지도에 표시
+                const container = document.getElementById("map");
+                const options = {
+                    center: new kakao.maps.LatLng(res[0].y, res[0].x),
+                    level: 3,
+                };
+                const map = new kakao.maps.Map(container, options);
+
+                // 해당 위치 마커로 표시
+                const marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(res[0].y, res[0].x),
+                    map: map
+                });
+            }
+        })        
+    }, [])
+
     return (
         <Col lg="6" md="12" className="mb-4">
             <Card small className="card-post card-post--1">
@@ -55,6 +78,8 @@ export default function StoreInfo({store}) {
                             <Checkboxes option={store.option} read={true} />
                         </ListGroupItem>
                     }
+
+                    <ListGroupItem id="map" style={{height: '300px'}} />
                 </ListGroup>
             </CardBody>
             </Card>
