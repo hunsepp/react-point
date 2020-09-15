@@ -14,27 +14,27 @@ const KLogin = () => {
 
   //카카오 로그인 성공시
   const responseKakao = (res) => {
-    console.log(setNickname);
-    console.log(res);
-    setId(res.profile.id);
-    setNickname(res.profile.properties.nickname);
-    setThumbnail_image(res.profile.properties.thumbnail_image);
-    setAccessToken(res.response.access_token);
-    setRefreshToken(res.response.refresh_token);
+    // console.log(setNickname);
+    // console.log(res);
+    // setId(res.profile.id);
+    // setNickname(res.profile.properties.nickname);
+    // setThumbnail_image(res.profile.properties.thumbnail_image);
+    // setAccessToken(res.response.access_token);
+    // setRefreshToken(res.response.refresh_token);
 
     axios
       .post("/api/kakao/signUp", {
-        user_id: id,
-        user_nickname: nickname,
-        user_thumbnail_image: thumbnail_image,
-        user_access_token: access_token,
-        user_refresh_token: refresh_token,
+        user_id: res.profile.id,
+        user_nickname: res.profile.properties.nickname,
+        user_thumbnail_image: res.profile.properties.thumbnail_image,
+        user_access_token: res.response.access_token,
+        user_refresh_token: res.response.refresh_token,
       })
       .then(({ data }) => {
         if (data.result == 1) {
-          localStorage.setItem("userAccessToken", access_token);
+          localStorage.setItem("userAccessToken", res.response.access_token);
           setKuser(data.kuser);
-          window.location = "/blog-overview";
+          window.location = "/";
         }
       });
   };

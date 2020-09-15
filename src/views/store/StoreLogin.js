@@ -26,8 +26,7 @@ export default function StoreLogin({history}) {
     const token = localStorage.getItem('storeToken');
     axios.get(`/api/store/${token}`).then(({data}) => {
         if(data.result == 1 && data.store) return history.push('/');
-
-        setLoading(true);
+        setLoading(false);
     });
   }, [])
 
